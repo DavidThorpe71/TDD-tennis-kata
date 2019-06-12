@@ -5,34 +5,42 @@ class TennisScorer {
   score() {
     return `${this.scoreInput}-Love`;
   }
+
   wonPoint() {
-    if (this.scoreInput === "Love") {
-      return (this.scoreInput = "Fifteen");
-    }
-    return (this.scoreInput = "Thirty");
+    const scores = ["Love", "Fifteen", "Thirty", "Forty"];
+    return (this.scoreInput = scores[scores.indexOf(this.scoreInput) + 1]);
   }
 }
 
 describe("TennisScorer", () => {
-  const tennisScorer = new TennisScorer();
-
-  const expectScoreToEqual = expected => {
+  const expectScoreToEqual = (tennisScorer, expected) => {
     const result = tennisScorer.score();
     expect(result).toEqual(expected);
   };
 
   it("can score a new game where no player has scored yet", () => {
-    expectScoreToEqual("Love-Love");
+    const tennisScorer = new TennisScorer();
+    expectScoreToEqual(tennisScorer, "Love-Love");
   });
 
   it("can score a new game where player one has scored once", () => {
+    const tennisScorer = new TennisScorer();
     tennisScorer.wonPoint();
-    expectScoreToEqual("Fifteen-Love");
+    expectScoreToEqual(tennisScorer, "Fifteen-Love");
   });
 
   it("can score a new game where player one has scored twice", () => {
+    const tennisScorer = new TennisScorer();
     tennisScorer.wonPoint();
     tennisScorer.wonPoint();
-    expectScoreToEqual("Thirty-Love");
+    expectScoreToEqual(tennisScorer, "Thirty-Love");
+  });
+
+  it("can score a new game where player one has scored three times", () => {
+    const tennisScorer = new TennisScorer();
+    tennisScorer.wonPoint();
+    tennisScorer.wonPoint();
+    tennisScorer.wonPoint();
+    expectScoreToEqual(tennisScorer, "Forty-Love");
   });
 });
